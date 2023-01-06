@@ -18,6 +18,7 @@ function App() {
     P7: "",
     P8: "",
   });
+
   const players = Object.keys(values);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
