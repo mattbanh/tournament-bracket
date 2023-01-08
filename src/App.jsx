@@ -2,7 +2,7 @@
 // If you use uuid, during re-render it will create a new key, re-rendering any elements that contain the key
 
 import { useState } from "react";
-import "./App.css";
+// import "./App.css";
 import Bracket from "./components/Bracket/Bracket";
 
 function App() {
@@ -31,19 +31,22 @@ function App() {
   };
 
   return (
-    <section>
-      {!start && (
-        <section>
-          <h1 className="mb-8">Start Your Tournament</h1>
+    <main className="m-16">
+      <section className="mx-auto max-w-7xl ">
+        <section className="">
+          <h1 className="text-lg mb-2">Start Your Tournament</h1>
           <div className="text-left">
             <form className="mb-16" onSubmit={startTournament}>
-              <h2 className="text-xl font-bold mb-6">Participants</h2>
-              <div className="flex flex-col w-1/2 mb-2">
+              <h2 className="text-md font-bold mb-2">Participants</h2>
+              <div className="flex flex-col mb-2">
                 {players.map((player) => (
-                  <label className="mb-3 flex justify-between" key={player}>
+                  <label
+                    className="mb-3 text-sm w-[240px] flex justify-between items-center"
+                    key={player}
+                  >
                     {player}
                     <input
-                      className="mx-3 rounded-md py-1 px-3"
+                      className="mx-3 rounded-md py-1 px-3 text-sm"
                       placeholder="Add a name"
                       name={player}
                       onChange={handleInputChange}
@@ -52,13 +55,13 @@ function App() {
                   </label>
                 ))}
               </div>
-              <button>Start Tournament</button>
+              <button className="text-sm">Build Bracket</button>
             </form>
           </div>
         </section>
-      )}
-      {start && <Bracket players={values} />}
-    </section>
+        <Bracket players={values} start={start} />
+      </section>
+    </main>
   );
 }
 
