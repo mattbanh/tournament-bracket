@@ -1,34 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+// Lessons:
+// If you use uuid, during re-render it will create a new key, re-rendering any elements that contain the key
+
+import { useState } from "react";
+// import "./App.css";
+import Bracket from "./components/Bracket/Bracket";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [eightGroup, setEightGroup] = useState(1);
+  const [start, setStart] = useState(false);
+  const [values, setValues] = useState({
+    P1: "",
+    P2: "",
+    P3: "",
+    P4: "",
+    P5: "",
+    P6: "",
+    P7: "",
+    P8: "",
+  });
+
+  const players = Object.keys(values);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const startTournament = (e) => {
+    e.preventDefault();
+    setStart(true);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <main className="m-16">
+      <section className="mx-auto max-w-7xl ">
+        <section className="">
+          <h1 className="text-lg mb-2">Start Your Tournament</h1>
+          <div className="text-left">
+            <form className="mb-16" onSubmit={startTournament}>
+              <h2 className="text-md font-bold mb-2">Participants</h2>
+              <div className="flex flex-col mb-2">
+                {players.map((player) => (
+                  <label
+                    className="mb-3 text-sm w-[240px] flex justify-between items-center"
+                    key={player}
+                  >
+                    {player}
+                    <input
+                      className="mx-3 rounded-md py-1 px-3 text-sm"
+                      placeholder="Add a name"
+                      name={player}
+                      onChange={handleInputChange}
+                      value={values[player]}
+                    />
+                  </label>
+                ))}
+              </div>
+              <button className="text-sm">Build Bracket</button>
+            </form>
+          </div>
+        </section>
+        <Bracket players={values} start={start} />
+      </section>
+    </main>
+  );
 }
 
-export default App
+export default App;
