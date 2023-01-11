@@ -71,16 +71,23 @@ function Bracket({ players, start }) {
   ];
 
   const createMatches = (sortedPlayerKeys, j, rounds) => {
-    if (j === rounds - 1) {
+    if (j === 0) {
       return sortedPlayerKeys.map((key, i) => {
         if (i % 2 === 0) {
           return (
-            <li key={(key, i)} className="relative mb-[40px] w-48">
+            <li
+              key={(key, i)}
+              className={
+                sortedPlayerKeys.length - 2 === i
+                  ? "relative w-48"
+                  : `relative mb-[40px] w-48`
+              }
+            >
               <div
                 className={
                   (i + 2) % 4 !== 0
-                    ? "p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[50px] after:-right-4 after:top-1/2"
-                    : "p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[50px] after:-right-4 after:bottom-1/2"
+                    ? "p-2 bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[50px] after:-right-4 after:top-1/2"
+                    : "p-2 bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[50px] after:-right-4 after:bottom-1/2"
                 }
               >
                 <div className="flex flex-col text-left">
@@ -97,24 +104,40 @@ function Bracket({ players, start }) {
         }
       });
     } else {
-      let slots = j + 1;
+      let slots = sortedPlayerKeys.length / 2 / Math.pow(2, j);
+      // console.log(j, slots);
       let matches = [];
       for (let n = 0; n < slots; n++) {
+        console.log(j, n, slots, slots - 1);
         matches.push(
           <li
             className={
-              (n + 2) % 3 === 0 || slots === 1
-                ? "relative mb-[40px] w-48  before:absolute before:border-t-2 before:w-full before:-left-4 before:top-1/2 before:-z-10"
-                : "relative mb-[128px] w-48  before:absolute before:border-t-2 before:w-full before:-left-4 before:top-1/2 before:-z-10"
+              n !== slots - 1
+                ? `relative ${
+                    j === 1 ? "mb-[128px]" : j === 2 ? "mb-[304px]" : ""
+                  }  w-48 before:absolute before:border-t-2 before:w-full before:-left-4 before:top-1/2 before:-z-10`
+                : "relative w-48 mb-0 before:absolute before:border-t-2 before:w-full before:-left-4 before:top-1/2 before:-z-10"
             }
           >
             <div
               className={
                 slots === 1
                   ? "p-2  bg-green-200"
-                  : (n + 2) % 3 !== 0
-                  ? "p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[100px] after:-right-4 after:top-1/2"
-                  : "p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 after:h-[100px] after:-right-4 after:bottom-1/2"
+                  : (n + 1) % 2 !== 0
+                  ? `p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 ${
+                      j === 1
+                        ? "after:h-[100px]"
+                        : j === 2
+                        ? "after:h-[200px]"
+                        : ""
+                    } after:-right-4 after:top-1/2`
+                  : `p-2  bg-green-200 before:absolute before:border-t-2 before:w-full before:left-4 before:top-1/2 before:-z-10 after:absolute after:border-r-2 ${
+                      j === 1
+                        ? "after:h-[100px]"
+                        : j === 2
+                        ? "after:h-[200px]"
+                        : ""
+                    } after:-right-4 after:bottom-1/2`
               }
             >
               <div className="flex flex-col text-left">
@@ -147,8 +170,6 @@ function Bracket({ players, start }) {
           </div>
         );
       });
-
-      // console.log(string);
     } else {
       return <span className="text-sm">Please add players</span>;
     }
@@ -164,9 +185,7 @@ function Bracket({ players, start }) {
     return (
       <section className="w-full">
         <h1 className="mb-2 text-lg">Tournament Bracket</h1>
-        <div className="flex flex-row-reverse justify-end w-full gap-8">
-          {createBracket(players)}
-        </div>
+        <div className="flex w-full gap-8">{createBracket(players)}</div>
       </section>
     );
   }

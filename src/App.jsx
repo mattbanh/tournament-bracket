@@ -17,6 +17,7 @@ function App() {
     P6: "",
     P7: "",
     P8: "",
+    P9: "",
   });
 
   const players = Object.keys(values);
