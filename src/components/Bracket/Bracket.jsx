@@ -10,6 +10,7 @@ function Bracket({ players, start }) {
     return playerKeys;
   };
 
+  // Creates a seeding map
   const createSeedIndArr = (rounds) => {
     const iteration = rounds - 1;
 
@@ -105,10 +106,9 @@ function Bracket({ players, start }) {
       });
     } else {
       let slots = sortedPlayerKeys.length / 2 / Math.pow(2, j);
-      // console.log(j, slots);
+
       let matches = [];
       for (let n = 0; n < slots; n++) {
-        console.log(j, n, slots, slots - 1);
         matches.push(
           <li
             className={
@@ -184,7 +184,7 @@ function Bracket({ players, start }) {
   if (start) {
     return (
       <section className="w-full">
-        <h1 className="mb-2 text-lg">Tournament Bracket</h1>
+        <h1 className="mb-6 text-lg">Tournament Bracket</h1>
         <div className="flex w-full gap-8">{createBracket(players)}</div>
       </section>
     );
