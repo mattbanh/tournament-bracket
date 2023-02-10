@@ -16,12 +16,12 @@ function ParticipantNames({ setShowBracket, setPlayers }) {
       inputs.push(
         <div className="mr-6" key={j}>
           {values.val.slice(values.val.length - 8).map((el, i) => (
-            <div key={(j + 1) * (i + 1)}>
+            <div key={j * 8 + i + 1}>
               <label className="mb-3 text-sm w-[240px] flex justify-between items-center">
                 P{j * 8 + i + 1}
                 <input
                   placeholder="Add a name"
-                  className="mx-3 rounded-md py-1 px-3 text-sm"
+                  className="mx-3 rounded-md py-1 px-3 text-sm bg-slate-100 text-black"
                   type="text"
                   name={`P${j * 8 + i + 1}`}
                   value={values.val[j * 8 + i] || ""}
@@ -48,6 +48,7 @@ function ParticipantNames({ setShowBracket, setPlayers }) {
 
   const showBracket = (e) => {
     e.preventDefault();
+    // console.log(values.val.filter(Boolean).length);
     setShowBracket(true);
     setPlayers(values.val);
   };
@@ -70,7 +71,7 @@ function ParticipantNames({ setShowBracket, setPlayers }) {
           </div>
         </div>
         <button
-          className="text-sm py-2 px-3 rounded-md bg-slate-500 hover:bg-slate-600 ease-in duration-150 border-0"
+          className="text-sm py-2 px-3 rounded-md text-slate-100 bg-slate-500 hover:bg-slate-600 ease-in duration-150 border-0"
           type="submit"
         >
           Build Bracket
@@ -83,13 +84,13 @@ function ParticipantNames({ setShowBracket, setPlayers }) {
 function App() {
   const [start, setShowBracket] = useState(false);
   const [players, setPlayers] = useState([]);
-  console.log(players);
 
   return (
     <main className="m-16">
       <section className="mx-auto max-w-7xl ">
         <section className="">
-          <h1 className="text-lg mb-6">Start Your Tournament</h1>
+          <h1 className="text-3xl mb-5 font-bold">VCD Tournament App</h1>
+          <h2 className="text-lg mb-6">Start Your Tournament</h2>
         </section>
         <ParticipantNames
           setShowBracket={setShowBracket}
@@ -102,27 +103,3 @@ function App() {
 }
 
 export default App;
-
-//  <div className="text-left">
-//    <form className="mb-16" onSubmit={startTournament}>
-//      <h2 className="text-md font-bold mb-2">Participants</h2>
-//      <div className="flex flex-col mb-2">
-//        {players.map((player) => (
-//          <label
-//            className="mb-3 text-sm w-[240px] flex justify-between items-center"
-//            key={player}
-//          >
-//            {player}
-//            <input
-//              className="mx-3 rounded-md py-1 px-3 text-sm"
-//              placeholder="Add a name"
-//              name={player}
-//              onChange={handleInputChange}
-//              value={values[player]}
-//            />
-//          </label>
-//        ))}
-//      </div>
-//      <button className="text-sm">Build Bracket</button>
-//    </form>
-//  </div>;
